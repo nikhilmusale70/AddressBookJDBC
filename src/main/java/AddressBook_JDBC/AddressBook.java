@@ -38,4 +38,18 @@ public class AddressBook {
             e.printStackTrace();
         }
     }
+
+    public void retrieveDateBetFromDB(String query){
+        try {
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            System.out.println(String.format("%-15s","AddressId \n") );
+            while (rs.next()) {
+                System.out.println(String.format("%-15s", rs.getInt("addId")));
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }
