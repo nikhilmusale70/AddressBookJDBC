@@ -1,16 +1,16 @@
 package AddressBook_JDBC;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class AddressBook {
+    ConnectionWithMySql conJDBC = new ConnectionWithMySql();;
+    Connection con = null;
 
+    public AddressBook() {
+        this.con = conJDBC.connect();
+    }
 
     public void retrieveFromDB(String query){
-        ConnectionWithMySql conJDBC = new ConnectionWithMySql();;
-        Connection con = conJDBC.connect();
         try {
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery(query);
@@ -23,6 +23,17 @@ public class AddressBook {
                 System.out.println();
             }
         }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void updateInDB(String query){
+        try {
+            PreparedStatement statement = con.prepareStatement(query);
+            int rowsChanged = statement.executeUpdate();
+            System.out.println(rowsChanged + " rows modified");
+            }
         catch (Exception e){
             e.printStackTrace();
         }
